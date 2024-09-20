@@ -1,0 +1,31 @@
+model:
+  name: DVAE
+  group_count: 3
+  n_blk_per_group: 2
+  channel: 128
+  kw: 3
+  codebook:
+    num_embeddings: 512
+    embedding_dim: 16
+    init_type: normal
+  quantizer:
+    name: DirichletQuantizer
+    temp: 1
+    kl_weight: 1.0e-07
+    max_annealing_steps: 5000
+    alpha_type: exp
+    clamp:
+    - '-inf'
+    - 20
+data:
+  name: CelebAData
+  data_dir: ./datasets/celeba
+  img_size: 64
+  batch_size: 128
+  num_workers: 4
+train:
+  max_steps: 150000
+  lr: 0.001
+  check_val_every_n_epoch: 1
+  seed: 1773
+  annealing: true

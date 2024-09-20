@@ -11,6 +11,7 @@ from models.dvae_encoder import DVAEEncoder
 from models.dvae_decoder import DVAEDecoder
 
 from models.dirichlet_quantizer import DirichletQuantizer
+from models.gumbel_quantizer import GumbelQuantizer
 
 def weights_init(m):
     classname = m.__class__.__name__
