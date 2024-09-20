@@ -1,18 +1,51 @@
 # EdVAE
-This code base is given as an EdVAE implementation using CIFAR10 dataset. All of the datasets and the methods will be shared later:
+Official implementation of "EdVAE: Mitigating Codebook Collapse with Evidential Discrete Variational Autoencoders".
 
-1. "config.yaml" file includes the configuration of an experiment.
-2. "data" folder consists of the data loaders for the datasets. Currently, we only share the data loader for the CIFAR10 dataset.
-3. "models" folder consists of the files related to the model such as the architecture and the quantizer etc. Currently, we only share the architecture and the quantizer for the EdVAE.
-4. "train.py" file is the main file to run for the training.
-5. "utils.py" file includes the helper functions.
+## Installation
+```
+conda create --name edvae --file package-list.txt
+conda activate edvae
+```
+## Data Preparation
+Create a folder named `datasets`. Download [CelebA](http://mmlab.ie.cuhk.edu.hk/projects/CelebA.html) and [LSUN Church](https://github.com/fyu/lsun) datasets explicitly, and put them to `datasets`.
+## Repository Configuration
 
-In order to run an experiment, you can follow these steps:
+`configs`: Consists of EdVAE configuration files for each dataset.
 
-1. First, you can create an environment using "package-list.txt" file to be able to run the codes.
-2. In order to replicate a CIFAR10 experiment, you can use "python train.py --config_path config.yaml" command.
-3. After that, you will see that two folders named as "DVAE" and "datasets" are created. "DVAE" folder will consist of other folders named after the used quantizer type. "datasets" folder will consist of the downloaded datasets. For this experiment, it is CIFAR10.
-4. In our experiment, we use DirichletQuantizer of EdVAE. DirichletQuantizer will consist of other folders named after the used dataset.
-5. As we use CIFAR10, we will have "CIFAR10Data" folder. In that folder, we will have a folder for each experiment that is named after the experiment date.
-6. In each experiment folder, we will have the checkpoints, saved images during the training and validation, the codes that we ran, and the tensorboard logs.
-7. You can view the results of each experiments using tensorboard.
+`data`: Consists of the data loaders for the datasets.
+
+`models`: Consists of the files related to the model such as the architecture and the quantizer etc.
+
+`train.py`: Training file.
+
+`utils.py`: Helper functions.
+
+## Training
+
+In order to train a model, run the following command:
+```
+python train.py --config_path configs/{dataset_name}.py
+```
+Example:
+```
+python train.py --config_path configs/cifar10.py
+```
+Each experiment's result be saved in a folder `{model_name}/{quantizer_name}/{lightning_data_module_name}/{experiment_date}`, e.g. `DVAE/DirichletQuantizer/CIFAR10Data/2024-09-03_17-18-38`. 
+Each folder will consist of `ckpt`, `codes`, `imgs`, and `logs` folders. Checkpoints will be saved in `ckpt`, codes that are used in this experiment will be saved in `codes`, reconstruction results will be saved in `imgs`, and tensorboard logs will be saved in `logs`.
+
+## Citation
+If you use this code for your research, please cite:
+```
+@article{baykal2024edvae,
+  title = {EdVAE: Mitigating codebook collapse with evidential discrete variational autoencoders},
+  journal = {Pattern Recognition},
+  volume = {156},
+  pages = {110792},
+  year = {2024},
+  issn = {0031-3203},
+  doi = {https://doi.org/10.1016/j.patcog.2024.110792},
+  url = {https://www.sciencedirect.com/science/article/pii/S0031320324005430},
+  author = {Gulcin Baykal and Melih Kandemir and Gozde Unal}
+}
+```
+If you have any questions, please contact `baykalg@itu.edu.tr`.
